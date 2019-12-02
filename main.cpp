@@ -13,7 +13,7 @@ cv::Mat DownSample(cv::Mat source)
     return dst;
 }
 
-cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow = 4,const float sigma_d = 0.5, const float sigma_r = 0.1)
+cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow = 5,const float sigma_d = 0.5, const float sigma_r = 0.1)
 {
     // https://www.jianshu.com/p/ce4afe599d6a 
     int width = high.cols;
@@ -58,9 +58,9 @@ cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow =
             cv::MatIterator_<float> rangeBegin = range.begin<float>();
             while(highBegin != highEnd)
             {
-                uchar B = (*highBegin)[0] - p[0];
-                uchar G = (*highBegin)[1] - p[1];
-                uchar R = (*highBegin)[2] - p[2];
+                float B = ((*highBegin)[0] - p[0]) / 255.f;
+                float G = ((*highBegin)[1] - p[1]) / 255.f;
+                float R = ((*highBegin)[2] - p[2]) / 255.f;
                 *rangeBegin = exp(-(B*B + G*G + R*R)/(2*sigma_r*sigma_r));
                 highBegin++;
                 rangeBegin++;
@@ -88,15 +88,6 @@ cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow =
             upSampled.at<Vec3b>(i,j)[0] = (uchar)new_p[0];
             upSampled.at<Vec3b>(i,j)[1] = (uchar)new_p[1];
             upSampled.at<Vec3b>(i,j)[2] = (uchar)new_p[2];
-
-            if(upSampled.at<Vec3b>(i,j) == cv::Vec3b(0,0,0))
-            {
-                cout<<"i "<<i<<" j "<<j<<endl;
-                // cout<<"iMax "<<iMax<<" iMin "<<iMin<<" jMax "<<jMax<<" jMin "<<jMin<<endl;
-                // imwrite("high.jpg",highWindow);
-                // imwrite("low.jpg",lowWindow);
-                //exit(0);
-            }
 
         }
     return upSampled;
