@@ -82,15 +82,11 @@ cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow =
                 sumBegin++;
                 lowBegin++;
             }
-            // cv::Mat_<cv::Vec3b> sumWeight = lowWindow.mul(spatial_range);
-            // cv::Vec4f new_p = cv::sum(sumWeight)/Kp;
-
             new_p /= Kp;
 
             upSampled.at<Vec3b>(i,j)[0] = (uchar)new_p[0];
             upSampled.at<Vec3b>(i,j)[1] = (uchar)new_p[1];
             upSampled.at<Vec3b>(i,j)[2] = (uchar)new_p[2];
-
         }
     return upSampled;
 }
