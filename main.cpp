@@ -13,8 +13,6 @@ cv::Mat DownSample(cv::Mat source)
     return dst;
 }
 
-//test
-
 cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow = 5,const float sigma_d = 0.5, const float sigma_r = 0.1)
 {
     // https://www.jianshu.com/p/ce4afe599d6a 
@@ -73,7 +71,6 @@ cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow =
             float Kp = cv::sum(spatial_range)[0];
             cv::Vec3f new_p(0,0,0);
             cv::MatIterator_<float> sumBegin = spatial_range.begin<float>();
-            // cv::MatIterator_<float> rangeBegin = range.begin<float>();
             cv::MatIterator_<float> sumEnd = spatial_range.end<float>();
             cv::MatIterator_<cv::Vec3b> lowBegin = lowWindow.begin<cv::Vec3b>();
             while(sumBegin != sumEnd)
