@@ -13,6 +13,8 @@ cv::Mat DownSample(cv::Mat source)
     return dst;
 }
 
+//test
+
 cv::Mat JointBilateralUpsample(cv::Mat high, cv::Mat low, const int halfWindow = 5,const float sigma_d = 0.5, const float sigma_r = 0.1)
 {
     // https://www.jianshu.com/p/ce4afe599d6a 
